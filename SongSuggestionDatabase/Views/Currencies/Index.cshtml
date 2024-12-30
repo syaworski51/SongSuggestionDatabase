@@ -1,0 +1,60 @@
+﻿@model Dictionary<string, decimal>
+
+@{
+    DateTime now = DateTime.Now;
+
+    string key = ViewBag.APIKey;
+    IQueryable<Currency> currencies = ViewBag.Currencies;
+
+    string GetNameOfCurrency(string code)
+    {
+        return currencies
+            .Where(c => c.Code == code)
+            .Select(c => c.Name)
+            .First();
+    }
+}
+
+<h1>Currency Conversions</h1>
+
+<p>
+    <strong>Last Updated:</strong> @now.ToLongDateString() @now.ToShortTimeString()
+</p>
+
+<div class="text-center align-content-center">
+    <form asp-action="Index">
+        <input type="text" class="form-control" id="currency-search" name="search" value="@ViewBag.CurrencySearch" placeholder="Search by symbol, 3-letter code, or name..." />
+        <button type="submit" class="btn btn-primary" value="Search">Search</button>
+    </form>
+
+    <h3>$1 USD =</h3>
+
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            @if (Model.Any())
+            {
+                foreach (var currency in Model)
+                {
+                    <div class="col-md-2 card container currency-card justify-content-center" title="@GetNameOfCurrency(currency.Key)">
+                        <div class="row">
+                            <div class="col-5">
+                                <span id="symbol">@currency.Key</span>
+                            </div>
+                            <div class="col-7" style="text-align: right;">
+                                <span id="rate">@string.Format("{0:F2}", currency.Value)</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <h4 class="text-danger">No currencies available.</h4>
+            }
+        </div>
+    </div>
+
+    <p>
+        Currency conversions powered by <a href="https://www.exchangerate-api.com/" target="_blank">ExchangeRate-API</a>.
+    </p>
+</div>

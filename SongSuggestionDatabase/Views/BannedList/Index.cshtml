@@ -1,0 +1,75 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using SongSuggestionDatabase.Models
+@using SongSuggestionDatabase.Models.Users
+@model IEnumerable<BannedArtist>
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+    bool userIsAdminOrModerator = User.IsInRole("Admin") || User.IsInRole("Moderator");
+}
+
+<h1>Index</h1>
+
+<p>
+    @if (userIsAdminOrModerator)
+    {
+        <a class="btn btn-primary" asp-action="Create">Add to Banned List</a>
+    }
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IgnoreInChecks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPermanentlyBanned)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comments)
+            </th>
+            @if (userIsAdminOrModerator)
+            {
+                <th>
+                    Actions
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var artist in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => artist.Name)
+                </td>
+                <td>
+                    @(artist.IgnoreInChecks ? "Yes" : "")
+                </td>
+                <td>
+                    @(artist.IsPermanentlyBanned ? "Yes" : "")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => artist.Comments)
+                </td>
+                @if (userIsAdminOrModerator)
+                {
+                    <td>
+                        @if (!artist.IsPermanentlyBanned)
+                        {
+                            <p>
+                                <a href="#">Permanently Ban</a> |
+                                <a href="#">Remove from Banned List</a>
+                            </p>
+                        }
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

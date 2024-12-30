@@ -1,0 +1,103 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using SongSuggestionDatabase.Models.Users
+@model IEnumerable<SongSuggestionDatabase.Models.Request>
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Full Catalog";
+    bool userIsAdminOrModerator = User.IsInRole("Admin") || User.IsInRole("Moderator");
+
+    string GetRatingColor(string? rating)
+    {
+        string ratingColor = "bg-";
+
+        switch (rating)
+        {
+            case "+":
+                ratingColor = "success";
+                break;
+
+            case "=":
+                ratingColor = "warning";
+                break;
+
+            case "-":
+                ratingColor = "danger";
+                break;
+
+            default:
+                return "";
+        }
+
+        return ratingColor + "-subtle";
+    }
+}
+
+<h1>@ViewBag.Title</h1>
+
+<form asp-action="Index" method="get">
+    Search: <input type="text" name="search" value="@ViewBag.SearchString" />
+    Sort by: @Html.DropDownList("sortOrder", (IEnumerable<SelectListItem>)ViewBag.CatalogSortOptions, new { onchange="submit()" })
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Song
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Rating
+            </th>
+            @if (userIsAdminOrModerator)
+            {
+                <th>
+                    Actions
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var song in Model) {
+            <tr>
+                <td>
+                    <span class="title">@song.Title</span><br />
+                    <span class="artist">@song.Artist</span>
+                </td>
+                <td>
+                    @song.Episode!.Date.ToShortDateString()
+                </td>
+                <td class="@GetRatingColor(song.Rating!.Symbol)">
+                    @if (song.Rating!.IconPath != null)
+                    {
+                        <img src="@song.Rating.IconPath" />
+                    }
+                    else
+                    {
+                        @song.Rating.Symbol
+                    }
+                </td>
+                @if (userIsAdminOrModerator)
+                {
+                    if (song.IsInQueue)
+                    {
+                        <partial name="Partials/SongInQueue.cshtml" />
+                    }
+                    else if (song.IsComplete)
+                    {
+                        <partial name="Partials/SongReviewed.cshtml" />
+                    }
+                    else
+                    {
+                        <partial name="Partials/SongIsPlaying.cshtml" />
+                    }
+                }
+            </tr>
+        }
+    </tbody>
+</table>

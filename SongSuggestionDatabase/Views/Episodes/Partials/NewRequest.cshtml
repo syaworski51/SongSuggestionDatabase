@@ -1,0 +1,49 @@
+﻿@model Request
+
+<div class="modal fade" id="new-request-modal" data-bs-backdrop="static" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form asp-controller="Requests" asp-action="Create">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body container">
+                    <div class="row">
+                        <div class="col" id="superchat-area">
+                            <p>
+                                Paste superchat here:
+                            </p>
+                            <textarea id="superchat-paste-area"></textarea>
+                        </div>
+                        <div class="col" id="request-info">
+                            <div class="form-group" id="requester-area">
+                                <label asp-for="RequestedBy" class="control-label"></label>
+                                <input asp-for="RequestedBy" class="form-control" id="requester-field" />
+                            </div>
+                            <div class="form-group" id="amount-area">
+                                <select id="currency-dropdown" name="Currency" asp-for="Currency" asp-items="@ViewBag.Currencies"></select>
+                                <input type="text" class="form-control" asp-for="Amount" id="amount-field" />
+                            </div>
+                            <div class="form-group" id="title-area">
+                                <label asp-for="Title" class="control-label"></label>
+                                <input asp-for="Title" class="form-control" id="title-field" />
+                            </div>
+                            <div class="form-group" id="switch-title-and-artist-area">
+                                <button class="btn btn-secondary" onclick="SwitchTitleAndArtist">Switch Title and Artist</button>
+                            </div>
+                            <div class="form-group" id="artist-area">
+                                <label asp-for="Artist" class="control-label"></label>
+                                <input asp-for="Artist" class="form-control" id="artist-field" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,140 @@
+﻿@model Episode
+
+@{
+    ViewData["Title"] = "Details";
+    IQueryable<Request> songs = ViewBag.Songs;
+
+    Request? nowPlaying = songs.FirstOrDefault(s => s.Status == "Now Playing");
+    IQueryable<Request> queue = songs.Where(s => s.Status == "In Queue");
+    IQueryable<Request> songsReviewed = songs.Where(s => s.Status == "Complete");
+
+    string GetAmountString(Currency currency, decimal? amount)
+    {
+        if (currency.Symbol != currency.Code)
+            return $"{currency.Symbol}{amount}";
+
+        return $"{currency.Code} {amount}";
+    }
+}
+
+<h1>@Model.Title</h1>
+<h3>@Model.ShortName</h3>
+
+<section id="song-list">
+    <h4>Now Playing</h4>
+    <div class="card container" id="now-playing-card">
+        <div class="row">
+            <div class="col-7" id="song-info">
+                <span id="current-title">Title</span><br />
+                <span id="current-artist" class="text-secondary">Artist</span>
+            </div>
+            <div class="col-3" id="requester-info">
+                Requested by:<br />
+                <span id="requester">Requester</span>
+            </div>
+            <div class="col-2" id="amount-info">
+                Amount:<br />
+                <span id="amount">$10.00</span>
+            </div>
+        </div>
+    </div>
+
+    <h4>Songs in Queue</h4>
+    <a class="btn btn-primary" asp-controller="Requests" asp-action="Create">New Request</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="col-3">Requested By</th>
+                <th class="col-2">Amount</th>
+                <th class="col-7">Song</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (queue.Any())
+            {
+                foreach (var song in queue)
+                {
+                    <tr>
+                        <td>@song.RequestedBy</td>
+                        <td>@GetAmountString(song.Currency!, song.Amount)</td>
+                        <td></td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3">
+                        <h5 class="text-danger text-center">No requests yet.</h5>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h4>Songs Reviewed</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="col-3">Requested By</th>
+                <th class="col-2">Amount</th>
+                <th class="col-6">Song</th>
+                <th class="col-1">Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (songsReviewed.Any())
+            {
+                foreach (var song in songsReviewed)
+                {
+                    <tr>
+                        <td>@song.RequestedBy</td>
+                        @if (song.Currency!.Code != "USD")
+                        {
+                            if (song.Currency.Symbol != song.Currency.Code)
+                            {
+                                <td>
+                                    <span>@song.Currency.Symbol@song.Amount</span><br />
+                                    <span>$@song.USDAmount</span>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <span>@song.Currency.Symbol @song.Amount</span><br />
+                                    <span>$@song.USDAmount</span>
+                                </td>
+                            }
+                        }
+                        else
+                        {
+                            <td>$@song.Amount</td>
+                        }
+                        <td>
+                            <span>@song.Title</span><br />
+                            <span>@song.Artist</span>
+                        </td>
+                        <td>
+                            @if (song.Rating!.IconPath != null)
+                            {
+                                <img class="rating-icon" src="@song.Rating!.IconPath" />
+                            }
+                            else
+                            {
+                                <p>@song.Rating!.Symbol</p>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4">
+                        <h5 class="text-danger text-center">No songs have been reviewed yet.</h5>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>

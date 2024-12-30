@@ -1,0 +1,122 @@
+@font-face {
+    font-family: "Aptos";
+    src: url('../fonts/APTOS.TTF') format('truetype');
+}
+
+@font-face {
+    font-family: "Druk Text";
+    src: url('../fonts/DRUKTEXT-MEDIUM-TRIAL.OTF') format('opentype');
+}
+
+@font-face {
+    font-family: "Druk Wide";
+    src: url('../fonts/DRUKWIDE-MEDIUM-TRIAL.OTF') format('opentype');
+}
+
+@font-face {
+    font-family: "Bebas Neue";
+    src: url('../fonts/BebasNeue-Regular.ttf') format('truetype');
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Druk Wide", sans-serif;
+}
+
+html {
+    font-size: 14px;
+    font-family: "Aptos";
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+#currency-search {
+    margin: auto;
+    width: 400px;
+}
+
+#result {
+    font-size: 50pt;
+}
+
+.currency-card {
+    margin: 10px;
+    height: 50px;
+
+    border: 1px solid black;
+}
+
+.currency-card .row {
+    vertical-align: middle;
+}
+
+.currency-card #symbol, .currency-card #rate {
+    font-size: 16pt;
+}
+
+.rating-icon {
+    height: 20px;
+}
+
+#episode-name {
+    font-family: "Bebas Neue";
+    font-size: 16pt;
+    color: black;
+}
+
+#song-count {
+    font-size: 10pt;
+}
+
+.link-card {
+    text-decoration: none;
+}
+
+.link-card:hover {
+    box-shadow: 0 0 10px black;
+}
+
+#now-playing-card {
+    font-family: "Bebas Neue";
+    padding: 8px;
+}
+
+#now-playing-card #current-title {
+    font-size: 15pt;
+}
+
+#now-playing-card #current-artist {
+    font-size: 12pt;
+}
+
+#now-playing-card #current-title,
+#now-playing-card #current-artist,
+#now-playing-card #requester,
+#now-playing-card #amount {
+    font-family: sans-serif;
+}
+
+#song-list h4 {
+    margin-top: 30px;
+    margin-bottom: 8px;
+}

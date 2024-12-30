@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using SongSuggestionDatabase.Models
+@using SongSuggestionDatabase.Models.Users
+@model IEnumerable<SongSuggestionDatabase.Models.Episode>
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Streams";
+    Dictionary<Episode, int> songCounts = ViewBag.SongCounts;
+
+    string GetSongCountString(Episode episode)
+    {
+        int count = songCounts[episode];
+        return $"{count} song{(count == 1 ? "" : "s")}";
+    }
+}
+
+<h1>@ViewBag.Title</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Start New Livestream</a>
+</p>
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        @if (Model.Any())
+        {
+            foreach (var episode in Model)
+            {
+                <a class="col-md-2 card link-card" asp-action="Details" asp-route-id="@episode.Id">
+                    <span id="episode-name">@episode.ShortName</span>
+                    <span id="song-count" class="text-secondary">@GetSongCountString(episode)</span>
+                </a>
+            }
+        }
+        else
+        {
+            <h4 class="text-danger text-center">No livestreams available.</h4>
+        }
+    </div>
+</div>
