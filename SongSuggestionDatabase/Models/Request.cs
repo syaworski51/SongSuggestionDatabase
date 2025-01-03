@@ -37,13 +37,16 @@ namespace SongSuggestionDatabase.Models
         public string Artist { get; set; }
 
         [ForeignKey(nameof(Episode))]
-        public Guid EpisodeId { get; set; }
+        public Guid? EpisodeId { get; set; }
         
         [Display(Name = "Episode")]
         public Episode? Episode { get; set; }
 
         [Display(Name = "Playing?")]
         public bool IsPlaying { get; set; }
+
+        [ForeignKey(nameof(Rating))]
+        public Guid? RatingId { get; set; }
 
         [Display(Name = "Rating")]
         public Rating? Rating { get; set; }

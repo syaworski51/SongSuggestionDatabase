@@ -22,6 +22,9 @@ namespace SongSuggestionDatabase.Models
         [Display(Name = "Format")]
         public string Format { get; set; }
 
+        [Display(Name = "Requests open?")]
+        public bool RequestsOpen { get; set; }
+
         [Display(Name = "Checking catalog?")]
         public string CatalogChecksEnabled { get; set; }
 
