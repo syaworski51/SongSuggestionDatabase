@@ -12,24 +12,26 @@ namespace SSDBAPI.Controllers
     public class EpisodesController : ControllerBase
     {
         private readonly MongoDbContext _context;
+        private readonly IMongoCollection<Episode> _collection;
 
         public EpisodesController(MongoDbContext context)
         {
             _context = context;
+            _collection = _context.GetCollection<Episode>("episodes");
         }
         
         
         // GET: api/<EpisodesController>
         [HttpGet]
-        public List<Episode> Get(string order = "desc")
+        public async Task<ActionResult<List<Episode>>> Get(string order = "desc")
         {
-            var episodesCollection = _context.GetCollection<Episode>("episodes");
-            
-            var episodes = episodesCollection.Find(_ => true)
-                .SortByDescending(e => e.Date)
-                .ToList();
+            if (_collection == null)
+                return NotFound();
 
-            return episodesCollection;
+            var episodes = _collection.Find(_ => true)
+                .SortByDescending(e => e.Date);
+
+            return await episodes.ToListAsync();
         }
 
         // GET api/<EpisodesController>/5
