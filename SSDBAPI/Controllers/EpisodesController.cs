@@ -23,28 +23,35 @@ namespace SSDBAPI.Controllers
         
         // GET: api/<EpisodesController>
         [HttpGet]
-        public async Task<ActionResult<List<Episode>>> Get(string order = "desc")
+        public async Task<IActionResult> Get(string order = "desc")
         {
             if (_collection == null)
                 return NotFound();
 
-            var episodes = _collection.Find(_ => true)
-                .SortByDescending(e => e.Date);
+            var episodes = _collection.Find(_ => true);
+            episodes = (order == "asc") ?
+                episodes.SortBy(s => s.Date) :
+                episodes.SortByDescending(s => s.Date);
 
-            return await episodes.ToListAsync();
+            return Ok(await episodes.ToListAsync());
         }
 
         // GET api/<EpisodesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet]
+        public async Task<IActionResult> Get(DateTime date)
         {
-            return "value";
+            if (_collection == null)
+                return NotFound();
+
+            var episode = _collection.Find(e => e.Date == date);
+            return Ok(episode.First());
         }
 
         // POST api/<EpisodesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] Episode episode)
         {
+
         }
 
         // PUT api/<EpisodesController>/5

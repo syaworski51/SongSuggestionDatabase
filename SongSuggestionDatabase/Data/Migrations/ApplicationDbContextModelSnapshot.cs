@@ -180,7 +180,7 @@ namespace SongSuggestionDatabase.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BannedList");
+                    b.ToTable("BannedList", (string)null);
                 });
 
             modelBuilder.Entity("SongSuggestionDatabase.Models.CatalogSortOption", b =>
@@ -201,7 +201,7 @@ namespace SongSuggestionDatabase.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CatalogSortOptions");
+                    b.ToTable("CatalogSortOptions", (string)null);
                 });
 
             modelBuilder.Entity("SongSuggestionDatabase.Models.Currency", b =>
@@ -219,7 +219,7 @@ namespace SongSuggestionDatabase.Data.Migrations
 
                     b.HasKey("Code");
 
-                    b.ToTable("Currencies");
+                    b.ToTable("Currencies", (string)null);
                 });
 
             modelBuilder.Entity("SongSuggestionDatabase.Models.Episode", b =>
@@ -256,7 +256,7 @@ namespace SongSuggestionDatabase.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Episodes");
+                    b.ToTable("Episodes", (string)null);
                 });
 
             modelBuilder.Entity("SongSuggestionDatabase.Models.Rating", b =>
@@ -285,7 +285,7 @@ namespace SongSuggestionDatabase.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ratings");
+                    b.ToTable("Ratings", (string)null);
                 });
 
             modelBuilder.Entity("SongSuggestionDatabase.Models.Request", b =>
@@ -348,7 +348,7 @@ namespace SongSuggestionDatabase.Data.Migrations
 
                     b.HasIndex("RatingId");
 
-                    b.ToTable("Songs");
+                    b.ToTable("Songs", (string)null);
                 });
 
             modelBuilder.Entity("SongSuggestionDatabase.Models.Users.ApplicationUser", b =>
