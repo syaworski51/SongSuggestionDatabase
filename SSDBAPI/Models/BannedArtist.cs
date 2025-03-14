@@ -1,10 +1,13 @@
-﻿namespace SSDBAPI.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SSDBAPI.Models
 {
     public class BannedArtist
     {
         /// <summary>
         ///     The name of the banned artist.
         /// </summary>
+        [MaxLength(50)]
         public string Name { get; set; }
 
         /// <summary>
@@ -20,6 +23,7 @@
         /// <summary>
         ///     Any comments left regarding this artist.
         /// </summary>
+        [MaxLength(100)]
         public string? Comments { get; set; }
     }
 }

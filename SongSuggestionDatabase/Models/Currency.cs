@@ -11,18 +11,21 @@ namespace SongSuggestionDatabase.Models
         /// </summary>
         [Key]
         [Display(Name = "Code")]
+        [MaxLength(5)]
         public string Code { get; set; }
         
         /// <summary>
         ///     YouTube superchat symbol for this currency.
         /// </summary>
         [Display(Name = "Symbol")]
+        [MaxLength(5)]
         public string Symbol { get; set; }
 
         /// <summary>
         ///     The name of this currency.
         /// </summary>
         [Display(Name = "Name")]
+        [MaxLength(50)]
         public string Name { get; set; }
     }
 }

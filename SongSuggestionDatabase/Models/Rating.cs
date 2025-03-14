@@ -10,15 +10,17 @@ namespace SongSuggestionDatabase.Models
         public Guid Id { get; set; }
 
         [Display(Name = "Symbol")]
-        public string Symbol { get; set; }
+        public char Symbol { get; set; }
 
         [Display(Name = "Name")]
+        [MaxLength(10)]
         public string Name { get; set; }
 
         [Display(Name = "Index")]
         public int Index { get; set; }
 
         [Display(Name = "Description")]
+        [MaxLength(150)]
         public string Description { get; set; }
 
         [Display(Name = "Icon Path")]

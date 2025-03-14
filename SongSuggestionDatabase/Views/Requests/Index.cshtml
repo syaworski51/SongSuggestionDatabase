@@ -9,21 +9,21 @@
     ViewData["Title"] = "Full Catalog";
     bool userIsAdminOrModerator = User.IsInRole("Admin") || User.IsInRole("Moderator");
 
-    string GetRatingColor(string? rating)
+    string GetRatingColor(char? rating)
     {
         string ratingColor = "bg-";
 
         switch (rating)
         {
-            case "+":
+            case '+':
                 ratingColor = "success";
                 break;
 
-            case "=":
+            case '=':
                 ratingColor = "warning";
                 break;
 
-            case "-":
+            case '-':
                 ratingColor = "danger";
                 break;
 
