@@ -1,9 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace SSDBAPI.Models
 {
     public class Episode
     {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public ObjectId Id { get; set; }
+        
         /// <summary>
         ///     The date of this episode.
         /// </summary>
@@ -31,6 +37,11 @@ namespace SSDBAPI.Models
         ///     Whether requests are open for this episode.
         /// </summary>
         public bool RequestsOpen { get; set; }
+
+        /// <summary>
+        ///     List of all the songs featured in this episode.
+        /// </summary>
+        public List<Song> Songs { get; set; }
 
         /// <summary>
         ///     Whether to check the catalog to see if a song has been done before.
